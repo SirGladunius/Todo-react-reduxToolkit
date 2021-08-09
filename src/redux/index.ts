@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import todoReducer from './features/todo/todoSlice'
-import { useDispatch } from 'react-redux'
 
 const rootReducer = combineReducers({
    todos: todoReducer,
