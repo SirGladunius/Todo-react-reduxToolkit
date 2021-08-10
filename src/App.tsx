@@ -1,18 +1,14 @@
 import React from 'react'
-import TodoList from './components/TodoList'
 import './App.css'
 import { BrowserRouter, Redirect, Route } from 'react-router-dom'
 import { Login } from './login/login'
 import { Registration } from '../src/registration/registration'
-
-const Main = () => (
-   <div className="App">
-      <h1 className={'header'}>TodoList</h1>
-      <TodoList />
-   </div>
-)
+import { Main } from './main/main'
+import { useSelector } from 'react-redux'
+import { RootState } from './redux'
 
 function App() {
+   const token = useSelector((state: RootState) => state.token)
    return (
       <BrowserRouter>
          <Route path={'/main'} component={Main} />
