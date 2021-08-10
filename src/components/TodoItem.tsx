@@ -25,7 +25,7 @@ const TodoItem: React.FC<ModalInterface> = (props) => {
    }
 
    return (
-      <li>
+      <li className={'num'}>
          <div className={'TodoItem'}>
             <input
                type="checkbox"

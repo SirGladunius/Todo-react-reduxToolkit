@@ -4,14 +4,17 @@
    align-content: center;
    justify-content: center;
 }
-.TodoList{
+.TodoList {
    width: 100vw;
    height: 70vh;
-   background-color: rgba(10,64,55,0.09)  ;
+   background-color: rgba(10, 64, 55, 0.09);
    border-radius: 5px;
    overflow-y: scroll;
 }
 
 .done {
    text-decoration: line-through;
+}
+.num {
+   margin-left: 30px;
 }
