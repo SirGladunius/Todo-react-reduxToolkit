@@ -4,7 +4,7 @@ import authReducer from './features/auth/authSlice'
 
 const rootReducer = combineReducers({
    todos: todoReducer,
-   token: authReducer,
+   auth: authReducer,
 })
 
 const store = configureStore({

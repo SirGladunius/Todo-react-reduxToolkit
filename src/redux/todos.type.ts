@@ -1,5 +1,5 @@
 export interface Todo {
-   title: string
-   completed: boolean
+   text: string
+   checked: boolean
    id: string
 }

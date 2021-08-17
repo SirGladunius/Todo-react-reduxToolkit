@@ -2,19 +2,30 @@ import React, { useState } from 'react'
 import classes from './registration.module.css'
 import { Button } from '@material-ui/core'
 import ApiServices from '../service/Api.servece'
+import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../redux'
+import { setToken } from '../redux/features/auth/authSlice'
+import TokenService from '../service/Token.service'
 
 export const Registration = () => {
    const [passwordValue, setPasswordValue] = useState<string>('')
    const [emailValue, setEmailValue] = useState<string>('')
+   const history = useHistory()
+   let tokenSelect: string = useSelector((state: RootState) => state.auth.token)
+   const dispatch = useDispatch()
 
-   const registration = () => {
+   const registration = async () => {
       try {
-         const token = ApiServices.postRegistration({
+         const token = await ApiServices.postRegistration({
             email: emailValue,
             password: passwordValue,
          })
+         TokenService.set(tokenSelect)
+         dispatch(setToken({ text: token }))
+         console.log('токен: ', TokenService.get())
       } catch (err) {
-         console.log('Ошибка регистрации ', err)
+         console.log('Ошибка регистрации', err)
       }
    }
 
@@ -44,6 +55,14 @@ export const Registration = () => {
             }}
          >
             Registration
+         </Button>
+         <Button
+            className={classes.registrationButton}
+            onClick={() => {
+               history.push('/login')
+            }}
+         >
+            Login
          </Button>
       </div>
    )

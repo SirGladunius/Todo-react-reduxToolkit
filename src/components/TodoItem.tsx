@@ -3,7 +3,11 @@ import { Button } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
 import './class.css'
 import { Todo } from '../redux/todos.type'
-import { removeTodo, toggleComplete } from '../redux/features/todo/todoSlice'
+import {
+   editToDos,
+   removeToDo,
+   removeTodo,
+} from '../redux/features/todo/todoSlice'
 
 interface ModalInterface {
    setOpen: () => void
@@ -13,15 +17,22 @@ interface ModalInterface {
 
 const TodoItem: React.FC<ModalInterface> = (props) => {
    const dispatch = useDispatch()
-   const classes = []
-   if (props.todo.completed) {
-      classes.push('done')
-   }
+   // const classes = []
+   // if (props.todo?.completed) {
+   //    classes.push('done')
+   // }
+   console.log(props.todo.checked)
    const handleToggle = () => {
-      dispatch(toggleComplete(props.todo))
+      dispatch(
+         editToDos(props.todo.id, {
+            text: props.todo.text,
+            checked: !props.todo.checked,
+         })
+      )
    }
    const removeThis = () => {
-      dispatch(removeTodo(props.todo.id))
+      dispatch(removeToDo(props.todo.id))
+      //RemoveToDo
    }
 
    return (
@@ -32,9 +43,9 @@ const TodoItem: React.FC<ModalInterface> = (props) => {
                onChange={() => {
                   handleToggle()
                }}
-               checked={props.todo.completed}
+               checked={props.todo.checked}
             />
-            <span className={classes.join(' ')}>{props.todo.title}</span>
+            <span>{props.todo.text}</span>
             <Button
                onClick={() => {
                   props.setOpen()

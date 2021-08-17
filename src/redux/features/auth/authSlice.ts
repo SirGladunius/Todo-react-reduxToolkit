@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { AuthState } from './auth.types'
-
+import TokenService from '../../../service/Token.service'
 const authSlice = createSlice({
    name: 'Auth',
    initialState: {
@@ -8,11 +8,11 @@ const authSlice = createSlice({
    },
    reducers: {
       setToken(state: AuthState, action) {
-         console.log('----------------------------------------')
-         state.token = action.payload.text
+         state.token = action.payload.text.token
+         TokenService.set(action.payload.text.token)
       },
       getToken(state: AuthState, action) {
-         console.log('******************************************')
+         return TokenService.get()
       },
    },
 })
