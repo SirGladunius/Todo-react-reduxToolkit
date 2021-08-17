@@ -8,6 +8,10 @@ const todoSlice = createSlice({
       todos: [],
    },
    reducers: {
+      clear(state: TodoState) {
+         state.todos = []
+      },
+
       addTodos(state: TodoState, action) {
          state.todos.push(action.payload)
       },
@@ -39,10 +43,20 @@ const todoSlice = createSlice({
    },
 })
 
-export const { changeTodo, addTodos, setTodos, removeTodo, editToDo } =
+export const { changeTodo, addTodos, setTodos, removeTodo, editToDo, clear } =
    todoSlice.actions
 
 export default todoSlice.reducer
+
+export const clearTodo = () => {
+   return async (dispatch: Dispatch) => {
+      try {
+         dispatch(clear())
+      } catch (e: any) {
+         console.log(`Error: ${e}`)
+      }
+   }
+}
 
 export const addTodo = (data: any) => {
    return async (dispatch: Dispatch) => {

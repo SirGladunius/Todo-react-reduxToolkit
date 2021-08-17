@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core'
 import ApiServices from '../service/Api.servece'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTodo } from '../redux/features/todo/todoSlice'
-import { setToken, getToken } from '../redux/features/auth/authSlice'
+import { setToken } from '../redux/features/auth/authSlice'
 import { selectTodos } from '../redux/features/todo/todo.seletors'
 import { Todo } from '../redux/todos.type'
 import { selectAuth } from '../redux/features/auth/auth.seletors'
@@ -15,7 +15,6 @@ import { useHistory } from 'react-router-dom'
 import TokenService from '../service/Token.service'
 
 export const Login = () => {
-   TokenService.set('')
    const [passwordValue, setPasswordValue] = useState<string>('')
    const [emailValue, setEmailValue] = useState<string>('')
    const [loading, setLoading] = useState(false)
@@ -26,14 +25,14 @@ export const Login = () => {
    const dispatch = useDispatch()
    const history = useHistory()
 
-   let tokenSelect: string = useSelector((state: RootState) => state.auth.token)
-   const logining = async () => {
+   const tokenSelect = useSelector((state: RootState) => state.auth.token)
+   const login = async () => {
       try {
          const token = await ApiServices.postLogin({
             email: emailValue,
             password: passwordValue,
          })
-         TokenService.set(tokenSelect)
+         TokenService.set(token)
          dispatch(setToken({ text: token }))
          console.log('токен: ', TokenService.get())
       } catch (err) {
@@ -63,10 +62,10 @@ export const Login = () => {
          <Button
             className={classes.loginButton}
             onClick={() => {
-               console.log(logining())
+               console.log(login())
             }}
          >
-            Logining
+            login
          </Button>
          <Button
             className={classes.registrationButton}

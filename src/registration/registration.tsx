@@ -12,7 +12,7 @@ export const Registration = () => {
    const [passwordValue, setPasswordValue] = useState<string>('')
    const [emailValue, setEmailValue] = useState<string>('')
    const history = useHistory()
-   let tokenSelect: string = useSelector((state: RootState) => state.auth.token)
+   let tokenSelect = useSelector((state: RootState) => state.auth.token)
    const dispatch = useDispatch()
 
    const registration = async () => {
@@ -21,7 +21,7 @@ export const Registration = () => {
             email: emailValue,
             password: passwordValue,
          })
-         TokenService.set(tokenSelect)
+         TokenService.set(token)
          dispatch(setToken({ text: token }))
          console.log('токен: ', TokenService.get())
       } catch (err) {

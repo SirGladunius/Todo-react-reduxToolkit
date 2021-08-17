@@ -1,3 +1,3 @@
 export interface AuthState {
-   token: string
+   token: string | null
 }
