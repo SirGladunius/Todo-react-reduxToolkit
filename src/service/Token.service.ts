@@ -9,7 +9,7 @@ class TokenService {
          return null
       }
 
-      return JSON.parse(strToken)
+      return JSON.parse(strToken).token
    }
    public static set(token: string) {
       return localStorage.setItem(this.key, JSON.stringify(token))

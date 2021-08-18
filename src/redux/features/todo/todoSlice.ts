@@ -2,6 +2,7 @@ import { createSlice, Dispatch } from '@reduxjs/toolkit'
 import { Todo } from '../../todos.type'
 import { TodoState } from './todo.types'
 import ApiService from '../../../service/Api.servece'
+import { log } from 'util'
 const todoSlice = createSlice({
    name: 'todos',
    initialState: {
@@ -61,11 +62,9 @@ export const clearTodo = () => {
 export const addTodo = (data: any) => {
    return async (dispatch: Dispatch) => {
       try {
+         console.log('data: ', data)
          const res = await ApiService.AddToDo(data)
-         if (res === undefined) {
-         } else {
-            dispatch(addTodos(res))
-         }
+         dispatch(addTodos(res))
       } catch (e: any) {}
    }
 }

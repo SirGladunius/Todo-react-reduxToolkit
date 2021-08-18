@@ -30,6 +30,7 @@ const TodoList = () => {
    }
    const addItem = () => {
       if (text.trim().length) {
+         console.log('текст: ', text)
          dispatch(addTodo({ text }))
       }
       setValue('')

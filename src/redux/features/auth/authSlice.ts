@@ -1,38 +1,16 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit'
 import { AuthState } from './auth.types'
-import ApiServices from '../../../service/Api.servece'
 import TokenService from '../../../service/Token.service'
 import ApiService from '../../../service/Api.servece'
-import { addTodos } from '../todo/todoSlice'
 
 const initialState: AuthState = {
    token: TokenService.get() || null,
 }
 
-const authSlice = createSlice({
-   name: 'Auth',
-   initialState,
-   reducers: {
-      setToken(state: AuthState, action) {
-         state.token = action.payload.text.token
-         console.log('Изменённый токен:', action.payload.text.token)
-         TokenService.set(action.payload.text.token)
-      },
-
-      registration(state: AuthState, action) {
-         state.token = action.payload.token
-      },
-      login(state: AuthState, action) {
-         state.token = action.payload.token
-      },
-   },
-})
-
-export const { setToken, registration, login } = authSlice.actions
-
-export default authSlice.reducer
-
-export const registrationAsync = (body: {
+export const registrationAsync: (body: {
+   email: string
+   password: string
+}) => (dispatch: Dispatch) => Promise<void> = (body: {
    email: string
    password: string
 }) => {
@@ -60,3 +38,26 @@ export const loginAsync = (body: { email: string; password: string }) => {
       } catch (e: any) {}
    }
 }
+
+const authSlice = createSlice({
+   name: 'Auth',
+   initialState,
+   reducers: {
+      setToken(state: AuthState, action) {
+         state.token = action.payload.text.token
+         console.log('Изменённый токен:', action.payload.text.token)
+         TokenService.set(action.payload.text.token)
+      },
+
+      registration(state: AuthState, action) {
+         state.token = action.payload.token
+      },
+      login(state: AuthState, action) {
+         state.token = action.payload.token
+      },
+   },
+})
+
+export const { login, setToken, registration } = authSlice.actions
+
+export default authSlice.reducer

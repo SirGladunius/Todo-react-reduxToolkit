@@ -1,31 +1,23 @@
 import React, { useState } from 'react'
 import classes from './login.module.css'
 import { Button } from '@material-ui/core'
-import ApiServices from '../service/Api.servece'
 import { useDispatch, useSelector } from 'react-redux'
-import { addTodo } from '../redux/features/todo/todoSlice'
-import { loginAsync, setToken } from '../redux/features/auth/authSlice'
-import { selectTodos } from '../redux/features/todo/todo.seletors'
-import { Todo } from '../redux/todos.type'
-import { selectAuth } from '../redux/features/auth/auth.seletors'
+import { loginAsync } from '../redux/features/auth/authSlice'
 import { RootState } from '../redux'
-import axios from 'axios'
-import { useRoutes } from '../../src/route'
 import { useHistory } from 'react-router-dom'
-import TokenService from '../service/Token.service'
 
 export const Login = () => {
    const [passwordValue, setPasswordValue] = useState<string>('')
    const [emailValue, setEmailValue] = useState<string>('')
-   const [loading, setLoading] = useState(false)
-   const [form, setForm] = useState({
-      email: '',
-      password: '',
-   })
+   // const [loading, setLoading] = useState(false)
+   // const [form, setForm] = useState({
+   //    email: '',
+   //    password: '',
+   // })
    const dispatch = useDispatch()
    const history = useHistory()
 
-   const tokenSelect = useSelector((state: RootState) => state.auth.token)
+   // const tokenSelect = useSelector((state: RootState) => state.auth.token)
    const login = async () => {
       // try {
       //    const token = await ApiServices.postLogin({

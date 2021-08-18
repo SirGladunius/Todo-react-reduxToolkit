@@ -32,6 +32,7 @@ class ApiServices {
          })
    }
    GetToDo() {
+      console.log(TokenService.get(), 'test token')
       return axios
          .get(`${this._apiUrl}/todo`, {
             headers: {
