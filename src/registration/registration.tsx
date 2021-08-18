@@ -5,7 +5,7 @@ import ApiServices from '../service/Api.servece'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux'
-import { setToken } from '../redux/features/auth/authSlice'
+import { registrationAsync, setToken } from '../redux/features/auth/authSlice'
 import TokenService from '../service/Token.service'
 
 export const Registration = () => {
@@ -16,17 +16,23 @@ export const Registration = () => {
    const dispatch = useDispatch()
 
    const registration = async () => {
-      try {
-         const token = await ApiServices.postRegistration({
+      // try {
+      //    const token = await ApiServices.postRegistration({
+      //       email: emailValue,
+      //       password: passwordValue,
+      //    })
+      //    TokenService.set(token)
+      //    dispatch(setToken({ text: token }))
+      //    console.log('токен: ', TokenService.get())
+      // } catch (err) {
+      //    console.log('Ошибка регистрации', err)
+      // }
+      dispatch(
+         registrationAsync({
             email: emailValue,
             password: passwordValue,
          })
-         TokenService.set(token)
-         dispatch(setToken({ text: token }))
-         console.log('токен: ', TokenService.get())
-      } catch (err) {
-         console.log('Ошибка регистрации', err)
-      }
+      )
    }
 
    return (

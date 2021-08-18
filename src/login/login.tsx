@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core'
 import ApiServices from '../service/Api.servece'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTodo } from '../redux/features/todo/todoSlice'
-import { setToken } from '../redux/features/auth/authSlice'
+import { loginAsync, setToken } from '../redux/features/auth/authSlice'
 import { selectTodos } from '../redux/features/todo/todo.seletors'
 import { Todo } from '../redux/todos.type'
 import { selectAuth } from '../redux/features/auth/auth.seletors'
@@ -27,17 +27,23 @@ export const Login = () => {
 
    const tokenSelect = useSelector((state: RootState) => state.auth.token)
    const login = async () => {
-      try {
-         const token = await ApiServices.postLogin({
+      // try {
+      //    const token = await ApiServices.postLogin({
+      //       email: emailValue,
+      //       password: passwordValue,
+      //    })
+      //    TokenService.set(token)
+      //    dispatch(setToken({ text: token }))
+      //    console.log('токен: ', TokenService.get())
+      // } catch (err) {
+      //    console.log('Ошибка входа у учётную запись', err)
+      // }
+      dispatch(
+         loginAsync({
             email: emailValue,
             password: passwordValue,
          })
-         TokenService.set(token)
-         dispatch(setToken({ text: token }))
-         console.log('токен: ', TokenService.get())
-      } catch (err) {
-         console.log('Ошибка входа у учётную запись', err)
-      }
+      )
    }
 
    return (
