@@ -7,22 +7,22 @@ const initialState: AuthState = {
    token: TokenService.get() || null,
 }
 
-export const registrationAsync: (body: {
-   email: string
-   password: string
-}) => (dispatch: Dispatch) => Promise<void> = (body: {
+export const registrationAsync = (body: {
    email: string
    password: string
 }) => {
    return async (dispatch: Dispatch) => {
       try {
          const res = await ApiService.postRegistration(body)
+         console.log(res)
          if (res === undefined) {
          } else {
             TokenService.set(res)
             dispatch(registration(res))
          }
-      } catch (e: any) {}
+      } catch (e: any) {
+         console.log(e)
+      }
    }
 }
 
@@ -35,7 +35,9 @@ export const loginAsync = (body: { email: string; password: string }) => {
             TokenService.set(res)
             dispatch(login(res))
          }
-      } catch (e: any) {}
+      } catch (e: any) {
+         console.log(e)
+      }
    }
 }
 
@@ -50,10 +52,10 @@ const authSlice = createSlice({
       },
 
       registration(state: AuthState, action) {
-         state.token = action.payload.token
+         state.token = action.payload
       },
       login(state: AuthState, action) {
-         state.token = action.payload.token
+         state.token = action.payload
       },
    },
 })

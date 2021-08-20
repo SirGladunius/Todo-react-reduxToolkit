@@ -12,6 +12,7 @@ interface ModalProps {
    open: boolean
    handleClose: () => void
    index: string
+   todoIndex: number
 }
 
 export const Modal: React.FC<ModalProps> = (props) => {
@@ -22,7 +23,12 @@ export const Modal: React.FC<ModalProps> = (props) => {
       console.log('index: ', props.index)
       console.log('in Modal Edit')
       const index = props.index
-      dispatch(editToDos(index, { text: changeText, checked: false }))
+      dispatch(
+         editToDos(index, props.todoIndex, {
+            title: changeText,
+            isCompleted: false,
+         })
+      )
       setChangeText('')
    }
 

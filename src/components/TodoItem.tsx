@@ -13,6 +13,7 @@ interface ModalInterface {
    setOpen: () => void
    todo: Todo
    setIndex: (id: string) => void
+   todoIndex: number
 }
 
 const TodoItem: React.FC<ModalInterface> = (props) => {
@@ -21,12 +22,11 @@ const TodoItem: React.FC<ModalInterface> = (props) => {
    // if (props.todo?.completed) {
    //    classes.push('done')
    // }
-   console.log(props.todo.checked)
-   const handleToggle = () => {
+   const handleToggle = (index: number) => {
       dispatch(
-         editToDos(props.todo.id, {
-            text: props.todo.text,
-            checked: !props.todo.checked,
+         editToDos(props.todo.id, index, {
+            title: props.todo.title,
+            isCompleted: !props.todo.isCompleted,
          })
       )
    }
@@ -41,11 +41,11 @@ const TodoItem: React.FC<ModalInterface> = (props) => {
             <input
                type="checkbox"
                onChange={() => {
-                  handleToggle()
+                  handleToggle(props.todoIndex)
                }}
-               checked={props.todo.checked}
+               checked={props.todo.isCompleted}
             />
-            <span>{props.todo.text}</span>
+            <span>{props.todo.title}</span>
             <Button
                onClick={() => {
                   props.setOpen()

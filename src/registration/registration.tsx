@@ -15,18 +15,7 @@ export const Registration = () => {
    let tokenSelect = useSelector((state: RootState) => state.auth.token)
    const dispatch = useDispatch()
 
-   const registration = async () => {
-      // try {
-      //    const token = await ApiServices.postRegistration({
-      //       email: emailValue,
-      //       password: passwordValue,
-      //    })
-      //    TokenService.set(token)
-      //    dispatch(setToken({ text: token }))
-      //    console.log('токен: ', TokenService.get())
-      // } catch (err) {
-      //    console.log('Ошибка регистрации', err)
-      // }
+   const registration = () => {
       dispatch(
          registrationAsync({
             email: emailValue,
@@ -57,7 +46,7 @@ export const Registration = () => {
          <Button
             className={classes.loginButton}
             onClick={() => {
-               console.log(registration())
+               registration()
             }}
          >
             Registration

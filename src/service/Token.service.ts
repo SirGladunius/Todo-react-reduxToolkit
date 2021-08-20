@@ -8,8 +8,8 @@ class TokenService {
       if (!strToken) {
          return null
       }
-
-      return JSON.parse(strToken).token
+      console.log(JSON.parse(strToken))
+      return JSON.parse(strToken)
    }
    public static set(token: string) {
       return localStorage.setItem(this.key, JSON.stringify(token))

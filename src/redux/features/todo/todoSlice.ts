@@ -3,6 +3,7 @@ import { Todo } from '../../todos.type'
 import { TodoState } from './todo.types'
 import ApiService from '../../../service/Api.servece'
 import { log } from 'util'
+import TokenService from '../../../service/Token.service'
 const todoSlice = createSlice({
    name: 'todos',
    initialState: {
@@ -22,11 +23,9 @@ const todoSlice = createSlice({
       },
 
       editToDo(state: TodoState, action) {
-         let newTodo = state.todos.find((todo) => todo.id === action.payload.id)
-         if (newTodo) {
-            newTodo.text = action.payload.text
-            newTodo.checked = action.payload.checked
-         }
+         state.todos[action.payload.index].title = action.payload.title
+         state.todos[action.payload.index].isCompleted =
+            action.payload.isCompleted
       },
 
       changeTodo(state: TodoState, action) {
@@ -35,7 +34,7 @@ const todoSlice = createSlice({
             (todo) => todo.id === action.payload.id
          )
          if (newTodo) {
-            newTodo.text = action.payload.changeText
+            newTodo.title = action.payload.changeText
          }
       },
       setTodos(state: TodoState, action) {
@@ -62,8 +61,8 @@ export const clearTodo = () => {
 export const addTodo = (data: any) => {
    return async (dispatch: Dispatch) => {
       try {
-         console.log('data: ', data)
          const res = await ApiService.AddToDo(data)
+         console.log('res:', res)
          dispatch(addTodos(res))
       } catch (e: any) {}
    }
@@ -73,10 +72,10 @@ export const getUserTodos = () => {
    return async (dispatch: Dispatch) => {
       try {
          const res = await ApiService.GetToDo()
-
+         console.log('---', res)
          dispatch(setTodos(res))
       } catch (e) {
-         console.log(e.message)
+         console.log(e)
       }
    }
 }
@@ -87,21 +86,29 @@ export const removeToDo = (id: string) => {
          const res = await ApiService.RemoveToDo(id)
          dispatch(removeTodo(id))
       } catch (e) {
-         console.log(e.message())
+         console.log(e)
       }
    }
 }
 
 export const editToDos = (
    id: string,
-   body: { text: string; checked: boolean }
+   index: number,
+   body: { title: string; isCompleted: boolean }
 ) => {
    return async (dispatch: Dispatch) => {
       try {
          const res = await ApiService.EditToDo(id, body)
-         dispatch(editToDo({ id, text: body.text, checked: body.checked }))
+         console.log(res)
+         dispatch(
+            editToDo({
+               title: body.title,
+               isCompleted: body.isCompleted,
+               index,
+            })
+         )
       } catch (e) {
-         console.log(e.message())
+         console.log(e)
       }
    }
 }

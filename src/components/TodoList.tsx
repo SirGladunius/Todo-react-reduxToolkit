@@ -14,6 +14,7 @@ const TodoList = () => {
    const [text, setValue] = useState<string>('')
    const [open, setOpen] = useState<boolean>(false)
    const [index, setIndex] = useState<string>('')
+   const [todoIndex, setTodoIndex] = useState(0)
 
    const token = useSelector((state: RootState) => state.auth.token)
 
@@ -30,8 +31,7 @@ const TodoList = () => {
    }
    const addItem = () => {
       if (text.trim().length) {
-         console.log('текст: ', text)
-         dispatch(addTodo({ text }))
+         dispatch(addTodo({ title: text }))
       }
       setValue('')
    }
@@ -46,15 +46,24 @@ const TodoList = () => {
          <Button onClick={addItem}>Save</Button>
          <div className={'TodoList'}>
             <ol>
-               {todos.map((todo: Todo) => (
-                  <TodoItem
-                     todo={todo}
-                     setOpen={() => setOpen(true)}
-                     setIndex={setIndex}
-                  />
-               ))}
+               {todos.map((todo: Todo, index) => {
+                  // setTodoIndex(index)
+                  return (
+                     <TodoItem
+                        todo={todo}
+                        setOpen={() => setOpen(true)}
+                        setIndex={setIndex}
+                        todoIndex={index}
+                     />
+                  )
+               })}
             </ol>
-            <Modal open={open} handleClose={handleClose} index={index} />
+            <Modal
+               open={open}
+               handleClose={handleClose}
+               index={index}
+               todoIndex={todoIndex}
+            />
          </div>
       </>
    )
